@@ -86,7 +86,7 @@ namespace OnlineShopWPF.ViewModels
 
         private bool MatchesSearch(Product product)
         {
-            return string.IsNullOrEmpty(Search) || product.Title.ToLower().Contains(Search.ToLower());
+            return string.IsNullOrEmpty(Search) || product.Title.Contains(Search, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public string Search
