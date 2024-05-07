@@ -12,16 +12,43 @@ namespace OnlineShopWPF.ViewModels
     internal class ProductsViewModel : ViewModelBase
     {
         private readonly Context _dbContext;
+        private readonly StaffStore _employeeStore;
+
         private readonly ProductModel _productsM = new();
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
         private Category _selectedCategory;
         private ObservableCollection<Product> _allProducts;
+        public ObservableCollection<Product> ProductsDataList { get; set; } = new ObservableCollection<Product>();
 
-        public ObservableCollection<Product> ProductsDataList { get; set; } = [];
+        private bool _isGuest;
 
-        public ProductsViewModel(Context dbContext)
+        public bool IsGuest
+        {
+            get { return _isGuest; }
+            set
+            {
+                _isGuest = value;
+                OnPropertyChanged(nameof(IsGuest));
+            }
+        }
+
+        private bool _isRead;
+
+        public bool IsRead
+        {
+            get { return _isRead; }
+            set
+            {
+                _isRead = value;
+                OnPropertyChanged(nameof(IsRead));
+            }
+        }
+
+        public ProductsViewModel(Context dbContext, StaffStore employeeStore)
         {
             _dbContext = dbContext;
+            _employeeStore = employeeStore;
+
             ProductsDataList = new ObservableCollection<Product>(_dbContext.Products);
 
             SaveCommand = new SaveCommand();
@@ -30,6 +57,24 @@ namespace OnlineShopWPF.ViewModels
 
             UpdateFilteredProducts();
             LoadCategories();
+
+            if (_employeeStore.CurrentStaff.RoleID == 1)
+            {
+                IsGuest = false;
+            }
+            else
+            {
+                IsGuest = true;
+            }
+
+            if (_employeeStore.CurrentStaff.RoleID == 1)
+            {
+                IsRead = true;
+            }
+            else
+            {
+                IsRead = false;
+            }
         }
 
         private void LoadCategories()

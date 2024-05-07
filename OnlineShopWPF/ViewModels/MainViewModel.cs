@@ -31,7 +31,7 @@ namespace OnlineShopWPF.ViewModels
             _viewModelStore = viewModelStore;
             _employeeStore = employeeStore;
 
-            _viewModelStore.CurrentViewModel = new ProductsViewModel(_context);
+            _viewModelStore.CurrentViewModel = new ProductsViewModel(_context, _employeeStore);
             _viewModelStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             _employeeStore.CurrentStaff = new Staff();

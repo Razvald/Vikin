@@ -12,7 +12,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid FontSize="16" Grid.Row="0" Grid.Column="0" Margin="0,10,10,0" ItemsSource="{Binding ProductsDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsNotGuest}">
+        <DataGrid FontSize="16" Grid.Row="0" Grid.Column="0" Margin="0,10,10,0" ItemsSource="{Binding ProductsDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsRead}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding Title}" />
                 <DataGridTextColumn Header="Цена" Binding="{Binding Price}" />
@@ -33,8 +33,8 @@
                       DisplayMemberPath="Name" 
                       Width="150" Margin="5" FontSize="20"/>
         </StackPanel>
-        
-        <Button Grid.Column="1" Content="Сохранить" Command="{Binding SaveCommand}" Margin="5" Height="32" FontSize="14" IsEnabled="{Binding IsSave}" VerticalAlignment="Bottom"/>
+
+        <Button Grid.Column="1" Content="Сохранить" Command="{Binding SaveCommand}" Margin="5" Height="32" FontSize="14" IsEnabled="{Binding IsGuest}" VerticalAlignment="Bottom"/>
 
     </Grid>
 </UserControl>

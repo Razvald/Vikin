@@ -31,9 +31,9 @@ namespace OnlineShopWPF.Command
                 {
                     _employeeStore.CurrentStaff = user;
                     if (_employeeStore.CurrentStaff.Role == _context.Roles.FirstOrDefault(r => r.ID == 1))
-                        _viewModelStore.CurrentViewModel = new StatisticsViewModel(_context);
+                        _viewModelStore.CurrentViewModel = new StatisticsViewModel(_context, _employeeStore);
                     else
-                        _viewModelStore.CurrentViewModel = new ProductsViewModel(_context);
+                        _viewModelStore.CurrentViewModel = new ProductsViewModel(_context, _employeeStore);
                 }
                 else
                 {

@@ -23,9 +23,9 @@ namespace OnlineShopWPF.Command
                 Func<ViewModelStore, StaffStore, ViewModelBase> createViewModel = viewModelName switch
                 {
                     "LoginViewModel" => (vmStore, empStore) => new LoginViewModel(vmStore, empStore, _context),
-                    "PickupEmployeeViewModel" => (vmStore, empStore) => new PickupStaffViewModel(_context),
-                    "ProductsViewModel" => (vmStore, empStore) => new ProductsViewModel(_context),
-                    "StatisticsViewModel" => (vmStore, empStore) => new StatisticsViewModel(_context),
+                    "PickupEmployeeViewModel" => (vmStore, empStore) => new PickupStaffViewModel(_context, _employeeStore),
+                    "ProductsViewModel" => (vmStore, empStore) => new ProductsViewModel(_context, _employeeStore),
+                    "StatisticsViewModel" => (vmStore, empStore) => new StatisticsViewModel(_context, _employeeStore),
                     _ => throw new ArgumentException("Invalid ViewModel name: " + parameter),
                 };
 

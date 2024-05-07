@@ -12,18 +12,63 @@ namespace OnlineShopWPF.ViewModels
     {
         private readonly Context _context;
         private PickupStaffModel _pickupStaffM;
+        private readonly StaffStore _employeeStore;
+
         public ObservableCollection<PickupEmployee> CombinedDataList { get; set; } = new ObservableCollection<PickupEmployee>();
         public ObservableCollection<PickupEmployee> _allStaff { get; set; } = new ObservableCollection<PickupEmployee>();
 
-        public PickupStaffViewModel(Context context)
+        private bool _isGuest;
+
+        public bool IsGuest
+        {
+            get { return _isGuest; }
+            set
+            {
+                _isGuest = value;
+                OnPropertyChanged(nameof(IsGuest));
+            }
+        }
+
+        private bool _isRead;
+
+        public bool IsRead
+        {
+            get { return _isRead; }
+            set
+            {
+                _isRead = value;
+                OnPropertyChanged(nameof(IsRead));
+            }
+        }
+
+        public PickupStaffViewModel(Context context, StaffStore employeeStore)
         {
             _context = context;
+            _employeeStore = employeeStore;
             _pickupStaffM = new PickupStaffModel();
             PropertyChanged += ProductsVM_PropertyChanged;
 
             InitializeCombinedDataList();
 
             SaveCommand = new SaveCommand();
+
+            if (_employeeStore.CurrentStaff.RoleID == 1 || _employeeStore.CurrentStaff.RoleID == 3)
+            {
+                IsGuest = false;
+            }
+            else
+            {
+                IsGuest = true;
+            }
+
+            if (_employeeStore.CurrentStaff.RoleID != 2)
+            {
+                IsRead = true;
+            }
+            else
+            {
+                IsRead = false;
+            }
         }
 
         private void InitializeCombinedDataList()

@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:OnlineShopWPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,16 +19,15 @@
         </Grid.ColumnDefinitions>
 
         <!-- Левая часть с данными о ПВЗ и заказах -->
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0"
-            Visibility="{Binding IsWorker, Converter={StaticResource BoolToVis}, ConverterParameter=True}">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
             <TextBlock Text="Поиск:" Margin="5" FontSize="20"/>
             <TextBox Text="{Binding SearchPoint, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5" FontSize="20"/>
         </StackPanel>
 
-        <Button Content="Сохранить" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Grid.Row="1" Margin="5" FontSize="20" IsEnabled="{Binding IsSave}"/>
+        <Button Content="Сохранить" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Grid.Row="1" Margin="5" FontSize="20" IsEnabled="{Binding IsGuest}"/>
 
         <Grid Grid.Row="2" Grid.Column="0">
-            <DataGrid ItemsSource="{Binding PickupPointsDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsAdmin}">
+            <DataGrid ItemsSource="{Binding PickupPointsDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsRead}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Pickup Point ID" Binding="{Binding ID}" />
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
@@ -47,10 +43,10 @@
             <TextBox Text="{Binding SearchEmp, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5" FontSize="20"/>
         </StackPanel>
 
-        <Button Content="Сохранить" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="20" IsEnabled="{Binding IsSave}"/>
+        <Button Content="Сохранить" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="5" FontSize="20" IsEnabled="{Binding IsGuest}"/>
 
         <Grid Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding EmployeesDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsAdmin}">
+            <DataGrid ItemsSource="{Binding EmployeesDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsRead}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Employee ID" Binding="{Binding ID}" />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />

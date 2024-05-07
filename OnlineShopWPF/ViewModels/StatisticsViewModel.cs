@@ -12,15 +12,41 @@ namespace OnlineShopWPF.ViewModels
     {
         private readonly Context _context;
         private StatisticModel _statisticM;
+        private readonly StaffStore _employeeStore;
 
         public ObservableCollection<Staff> EmployeesDataList { get; set; } = new ObservableCollection<Staff>();
         public ObservableCollection<Staff> _allStaff { get; set; } = new ObservableCollection<Staff>();
         public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
         public ObservableCollection<PickupPoint> _allPoint { get; set; } = new ObservableCollection<PickupPoint>();
 
-        public StatisticsViewModel(Context context)
+        private bool _isGuest;
+
+        public bool IsGuest
+        {
+            get { return _isGuest; }
+            set
+            {
+                _isGuest = value;
+                OnPropertyChanged(nameof(IsGuest));
+            }
+        }
+
+        private bool _isRead;
+
+        public bool IsRead
+        {
+            get { return _isRead; }
+            set
+            {
+                _isRead = value;
+                OnPropertyChanged(nameof(IsRead));
+            }
+        }
+
+        public StatisticsViewModel(Context context, StaffStore employeeStore)
         {
             _context = context;
+            _employeeStore = employeeStore;
             _statisticM = new StatisticModel();
             EmployeesDataList = new ObservableCollection<Staff>(_context.Staffs);
             _allStaff = new ObservableCollection<Staff>(_context.Staffs);
@@ -30,6 +56,24 @@ namespace OnlineShopWPF.ViewModels
             PropertyChanged += StatisticsVM_PropertyChanged;
 
             SaveCommand = new SaveCommand();
+
+            if (_employeeStore.CurrentStaff.RoleID == 1 || _employeeStore.CurrentStaff.RoleID == 3)
+            {
+                IsGuest = false;
+            }
+            else
+            {
+                IsGuest = true;
+            }
+
+            if (_employeeStore.CurrentStaff.RoleID != 2)
+            {
+                IsRead = true;
+            }
+            else
+            {
+                IsRead = false;
+            }
         }
 
         private void StatisticsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
